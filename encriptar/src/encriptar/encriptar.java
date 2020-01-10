@@ -13,8 +13,13 @@ public class encriptar {
 		System.out.println("Ingrese el tamaño de la matriz");
 		tamaño=sc.nextInt();
 		mensajeEncriptado=encriptarTransposicion(mensaje,tamaño);
+		System.out.println("Encriptado por transposicion: "+mensajeEncriptado);
 		mensajeEncriptado=encriptarSustitucion(mensajeEncriptado);
-		System.out.println(mensajeEncriptado);
+		System.out.println("Encriptado por sustitucion: "+mensajeEncriptado);
+		mensajeEncriptado=desencriptarSustitucion(mensajeEncriptado);
+		System.out.println("Desencriptado por sustitucion: "+mensajeEncriptado);
+		mensajeEncriptado=desencriptarTransposicion(mensajeEncriptado,tamaño);
+		System.out.println("Desencriptado por transposicion: "+mensajeEncriptado);
 	}
 	public static String encriptarTransposicion(String mensaje,int tamaño) {
 		char[] mensajeChar =mensaje.toCharArray();
@@ -55,6 +60,43 @@ public class encriptar {
 			mensajeEncriptado+=abecedarioEncriptado.charAt(posicion);		
 		}
 		return mensajeEncriptado;
+	}
+	public static String desencriptarTransposicion(String mensaje,int parametro) {
+		String mensajeDesencriptado="";
+		int incremento=1;
+		char[] mensajeChar =mensaje.toCharArray();
+		int letras = mensajeChar.length;
+		int filas=0;
+		int aumentador = parametro;
+		while(letras/parametro>0) {
+			parametro= parametro+aumentador;
+			filas++;
+		}
+		
+		for(int j=0;j<filas;j++) {
+			incremento=j;
+			mensajeDesencriptado+=mensajeChar[incremento];
+			
+			for(int i=0;i<aumentador-1;i++) {
+				incremento=incremento+filas;
+				mensajeDesencriptado+=mensajeChar[incremento];
+			}
+			
+		}
+		String mensajeFinal = mensajeDesencriptado.replace("$"," ");
+		
+		return mensajeFinal.replace("#"," ");
+	}
+	public static String desencriptarSustitucion(String mensaje) {
+		String mensajeDesEncriptado="";
+		String abecedario = "abcdefghijklmnñopqrstuvwxyz$#";
+		String abecedarioEncriptado="tuvenwfoyizlxhspmjrñcagkbqd&$";
+		for (int i = 0; i < mensaje.length(); i++) {
+			char letra=mensaje.charAt(i);
+			int posicion= abecedarioEncriptado.indexOf(letra);
+			mensajeDesEncriptado+=abecedario.charAt(posicion);		
+		}
+		return mensajeDesEncriptado;
 	}
 
 }
