@@ -6,20 +6,42 @@ public class encriptar {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		String mensaje,mensajeEncriptado;
+		String mensaje,mensajeEncriptado,mensajeDesencriptado;
 		int tamaño;
-		System.out.println("Ingrese el mensaje que desea encriptar:");
-		mensaje=sc.nextLine();
-		System.out.println("Ingrese el tamaño de la matriz");
-		tamaño=sc.nextInt();
-		mensajeEncriptado=encriptarTransposicion(mensaje,tamaño);
-		System.out.println("Encriptado por transposicion: "+mensajeEncriptado);
-		mensajeEncriptado=encriptarSustitucion(mensajeEncriptado);
-		System.out.println("Encriptado por sustitucion: "+mensajeEncriptado);
-		mensajeEncriptado=desencriptarSustitucion(mensajeEncriptado);
-		System.out.println("Desencriptado por sustitucion: "+mensajeEncriptado);
-		mensajeEncriptado=desencriptarTransposicion(mensajeEncriptado,tamaño);
-		System.out.println("Desencriptado por transposicion: "+mensajeEncriptado);
+		int opc;
+		do {
+			System.out.println("escoja una opcion \n1)Encriptar \n2)Desencriptar \n3)salir");
+			opc=sc.nextInt();
+			switch (opc) {
+			case 1:
+				System.out.println("Ingrese el mensaje que desea encriptar:");
+				sc.nextLine();
+				mensaje=sc.nextLine();
+				System.out.println("Ingrese el tamaño de la matriz");
+				tamaño=sc.nextInt();
+				mensajeEncriptado=encriptarTransposicion(mensaje,tamaño);
+				mensajeEncriptado=encriptarSustitucion(mensajeEncriptado);
+				System.out.println("Mensaje Encriptado: "+mensajeEncriptado);
+				break;
+			case 2:
+				System.out.println("Ingrese el mensaje que desea desencriptar:");
+				sc.nextLine();
+				mensaje=sc.nextLine();
+				System.out.println("Ingrese el tamaño de la matriz");
+				tamaño=sc.nextInt();
+				mensajeDesencriptado=desencriptarSustitucion(mensaje);
+				System.out.println("Desencriptado por sustitucion: "+mensajeDesencriptado);
+				mensajeDesencriptado=desencriptarTransposicion(mensajeDesencriptado,tamaño);
+				System.out.println("Desencriptado por transposicion: "+mensajeDesencriptado);
+				break;
+			default:
+				System.out.println("!!!!!!!!saliendo!!!!!!!!!!!!!!");
+				break;
+			}
+		}while(opc!=3);
+		
+		
+		/**/
 	}
 	public static String encriptarTransposicion(String mensaje,int tamaño) {
 		char[] mensajeChar =mensaje.toCharArray();
@@ -85,7 +107,7 @@ public class encriptar {
 		}
 		String mensajeFinal = mensajeDesencriptado.replace("$"," ");
 		
-		return mensajeFinal.replace("#"," ");
+		return mensajeFinal.replace("#","");
 	}
 	public static String desencriptarSustitucion(String mensaje) {
 		String mensajeDesEncriptado="";
